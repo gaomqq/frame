@@ -92,14 +92,9 @@ func AgentHealthService(ctx context.Context, serviceName string) (string, error)
 
 func ServiceRegister(nacosGroup, serviceName string, address string, port string) error {
 
-	clien := capi.DefaultConfig()
-
-	clien.Address = "10.2.171.125:8500"
-	client, err := capi.NewClient(capi.DefaultConfig())
-	if err != nil {
-		return err
-	}
-
+	config:= capi.DefaultConfig()
+	config.Address = "10.2.171.125:8500"
+	client,_:=capi.NewClient(config)
 	return client.Agent().ServiceRegister(&capi.AgentServiceRegistration{
 		ID:      uuid.NewString(),
 		Name:    "user",
@@ -110,7 +105,6 @@ func ServiceRegister(nacosGroup, serviceName string, address string, port string
 			GRPC:                           fmt.Sprintf("%v:%v", GetIp()[0], "8081"),
 			Interval:                       "5s",
 			DeregisterCriticalServiceAfter: "10s",
-			Timeout:                        "5s",
 		},
 	})
 }
