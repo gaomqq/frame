@@ -94,7 +94,7 @@ func ServiceRegister(nacosGroup, serviceName string, address string, port string
 
 	clien := capi.DefaultConfig()
 
-	clien.Address = "10.2.171.125:8081"
+	clien.Address = "10.2.171.125:8500"
 	client, err := capi.NewClient(capi.DefaultConfig())
 	if err != nil {
 		return err
@@ -110,6 +110,7 @@ func ServiceRegister(nacosGroup, serviceName string, address string, port string
 			GRPC:                           fmt.Sprintf("%v:%v", GetIp()[0], "8081"),
 			Interval:                       "5s",
 			DeregisterCriticalServiceAfter: "10s",
+			Timeout:                        "5s",
 		},
 	})
 }
